@@ -19,3 +19,9 @@ if bashio::config.true 'ssl'; then
 else
     mv /etc/nginx/servers/direct.disabled /etc/nginx/servers/direct.conf
 fi
+
+if bashio::config.true 'real_ip_fix'; then
+    sed -i "s#%%real_ip_fix%%#set_real_ip_from  ${set_real_ip_from};
+real_ip_header    ${real_ip_header};
+real_ip_recursive ${real_ip_recursive};#g" /etc/nginx/includes/proxy.conf
+fi
